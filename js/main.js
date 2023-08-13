@@ -1,9 +1,5 @@
 
-let capitalInicial = document.getElementById("capitalInicial").value;
-let tasaInteres = document.getElementById("rentabilidad").value;
-let periodoAhorro = document.getElementById("plazo").value;
-let aportesMesuales = document.getElementById("plazo").value;
-
+//funcion para caclular el interes
 function interesCompuesto(capital,interes,periodo,aporte){
     let r = (interes/100)/12
     let t = periodo*12
@@ -14,7 +10,7 @@ function interesCompuesto(capital,interes,periodo,aporte){
 
     return capitalFinal
 }
-
+//constructora de objetos (inversiones)
 class Inversiones {
     constructor(info){
         this.plazo = info.plazo;
@@ -25,33 +21,31 @@ class Inversiones {
     }
 
 }
+//array donde se almacenan los objetos (inversiones)
 const inversiones = []
 
-
+//funcion agregar y calcular interes
 function agregar(){
+    //capturar valores
     let capitalInicial = document.getElementById("capitalInicial").value;
     let tasaInteres = document.getElementById("rentabilidad").value;
     let periodoAhorro = document.getElementById("plazo").value;
-    let aportesMesuales = document.getElementById("plazo").value;
-    
+    let aportesMesuales = document.getElementById("aportes").value;
+    //dar informacion y calcular
+    alert(`Agrego correctamente su inversion con un capital inicial de $${capitalInicial} a un plazo de ${periodoAhorro} AÑOS, con aportes de $${aportesMesuales} MENSUALES a una tasa de interes del ${tasaInteres}% ANUAL`)
+    let calculo = interesCompuesto(capitalInicial,tasaInteres,periodoAhorro,aportesMesuales).toFixed(2)
+    alert(`Su capital al finalizar el plazo sera de $${calculo}`)
+    alert(`De los cuales $${10*12*aportesMesuales} son aportes y $${calculo-(10*12*aportesMesuales)-capitalInicial} son intereses`)
+    //agegar al array la nueva inversion
     inversiones.push(new Inversiones({
         plazo: periodoAhorro,
         capital: capitalInicial,
         interes: tasaInteres,
         aportes: aportesMesuales,
     }))
-    alert(`Agrego correctamente su inversion con un capital inicial de $${capitalInicial} a un plazo de ${periodoAhorro} AÑOS, con aportes de $${aportesMesuales} MENSUALES a una tasa de interes del ${tasaInteres}% ANUAL`)
 }
-
+//Ejecutar la funcion cuando se preciona el boton
 document.getElementById("agregar").onclick = function (){
     agregar();
 }
 
-
-//arrays
-//inversiones.push(5) agrega al final
-// inversiones.pop() saca al final de arreglo
-// inversiones.shift() saca al principio
-// inversiones.splice(1,2) Elimina varios elementos por el orden
-// inversiones.indexof() Posicion de arreglo
-//inversiones.includes () Busca si esta en el arreglo
