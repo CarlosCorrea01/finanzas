@@ -17,7 +17,7 @@ class Inversiones {
         this.capital = info.capital;
         this.interes = info.interes;
         this.aportes = info.aportes;
-    
+        
     }
 
 }
@@ -25,17 +25,12 @@ class Inversiones {
 const inversiones = []
 
 //funcion agregar y calcular interes
-function agregar(){
+function agregarCalcular(){
     //capturar valores
     let capitalInicial = document.getElementById("capitalInicial").value;
     let tasaInteres = document.getElementById("rentabilidad").value;
     let periodoAhorro = document.getElementById("plazo").value;
-    let aportesMesuales = document.getElementById("aportes").value;
-    //dar informacion y calcular
-    alert(`Agrego correctamente su inversion con un capital inicial de $${capitalInicial} a un plazo de ${periodoAhorro} AÑOS, con aportes de $${aportesMesuales} MENSUALES a una tasa de interes del ${tasaInteres}% ANUAL`)
-    let calculo = interesCompuesto(capitalInicial,tasaInteres,periodoAhorro,aportesMesuales).toFixed(2)
-    alert(`Su capital al finalizar el plazo sera de $${calculo}`)
-    alert(`De los cuales $${10*12*aportesMesuales} son aportes y $${calculo-(10*12*aportesMesuales)-capitalInicial} son intereses`)
+    let aportesMesuales = document.getElementById("aportes").value; 
     //agegar al array la nueva inversion
     inversiones.push(new Inversiones({
         plazo: periodoAhorro,
@@ -43,9 +38,22 @@ function agregar(){
         interes: tasaInteres,
         aportes: aportesMesuales,
     }))
-}
-//Ejecutar la funcion cuando se preciona el boton
-document.getElementById("agregar").onclick = function (){
-    agregar();
+    //Agregar al local
+    sessionStorage.setItem("misinversiones",JSON.stringify(inversiones))
+    //
+    let calculo = interesCompuesto(capitalInicial,tasaInteres,periodoAhorro,aportesMesuales).toFixed(2)
+
+    let caja = document.createElement("div")
+    caja.className = "cajaInver"
+    caja.innerHTML =`
+        <p>CAPITAL:$${capitalInicial}; PLAZO: ${periodoAhorro} AÑOS; INTERES: ${tasaInteres}%; APORTES: $${aportesMesuales}</p>
+        <h4>CAPITAL FINAL $${calculo}</h4>
+        `
+        document.body.append(caja)
 }
 
+//Ejecutar la funcion cuando se preciona el boton
+document.getElementById("agregar").onclick = function (){
+    agregarCalcular();
+    
+}
