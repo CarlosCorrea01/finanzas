@@ -50,8 +50,10 @@ function guardar(){
 }
 
 //ver inversiones cargadas
-let misGuardados = document.getElementById("misGuardados")
+
+
 const renderisado = (inversiones)=>{
+    let misGuardados = document.getElementById("misGuardados")
     misGuardados.innerHTML = ""
     inversiones.forEach(item => {
         let div = document.createElement(`div`);
@@ -59,7 +61,7 @@ const renderisado = (inversiones)=>{
         div.innerHTML = `
         <p class="m-3 fs-6 fw-bold">CAPITAL:$${item.capital}</p>
         <p class="m-3 fs-6 fw-bold">PLAZO:${item.plazo} AÑOS</p>
-        <p class="m-3 fs-6 fw-bold">RENDIMIENTO:${item.interes}</p>
+        <p class="m-3 fs-6 fw-bold">RENDIMIENTO:${item.interes}%</p>
         <p class="m-3 fs-6 fw-bold">APORTES:$${item.aportes} MENSUALES</p>
         <p class="m-3 fs-6 fw-bold">BALANCE FINAL:$${calculo(item.capital,item.interes,item.plazo,item.aportes)}</p>
         `;
@@ -88,10 +90,12 @@ document.getElementById("calcular").onclick = ()=>{
         }
       })
 }
+//reiniciar y eliminar session
 document.getElementById("reiniciar").onclick = ()=>{
     location.reload();
     sessionStorage.clear();
 }
+
 let otros = document.getElementById("otrosdolar");
 let dolarblue = document.getElementById("dolarblue");
 
