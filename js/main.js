@@ -92,41 +92,9 @@ document.getElementById("reiniciar").onclick = ()=>{
     location.reload();
     sessionStorage.clear();
 }
-/*
-let datadolar = document.getElementById("dolar");
-
-fetch("https://dolarapi.com/v1/dolares")
-  .then(response => response.json())
-  .then(data => 
-    data.forEach(key =>{
-        let div = document.createElement(`div`);
-        div.className = "d-flex justify-content-center m-2 border border-success border-2"
-        div.innerHTML = `
-        <div>
-        <p class=" fs-6 fw-bold">DOLAR:${key.nombre}</p>
-        <p class="fs-6 fw-bold">COMPRA:${key.compra}</p>
-        <p class=" fs-6 fw-bold">VENTA:${key.venta}</p>
-        </div>
-        `;
-        datadolar.append(div)
-    })) ;
-
-*/
-
-let dolarblue = document.getElementById("dolarblue");
-fetch("https://dolarapi.com/v1/dolares")
-  .then(response => response.json())
-  .then(data => 
-    dolarblue.innerHTML = `
-        <h2 class="">Dolar ${data[1].nombre}</h2>
-        <div class="d-flex justify-content-center w-100">
-            <p class="m-2 fs-3 fw-bold text-success">C: $${data[1].compra}</p>
-            <p class="m-2 fs-3 fw-bold text-success">V: $${data[1].venta}</p>
-        </div>
-    `
-);
-
 let otros = document.getElementById("otrosdolar");
+let dolarblue = document.getElementById("dolarblue");
+
 fetch("https://dolarapi.com/v1/dolares")
   .then(response => response.json())
   .then(data => {
@@ -151,20 +119,14 @@ fetch("https://dolarapi.com/v1/dolares")
         otros.append(div);
         }
     })
+    dolarblue.innerHTML = `
+        <h2 class="">Dolar ${data[1].nombre}</h2>
+        <div class="d-flex justify-content-center w-100">
+            <p class="m-2 fs-3 fw-bold text-success">C: $${data[1].compra}</p>
+            <p class="m-2 fs-3 fw-bold text-success">V: $${data[1].venta}</p>
+        </div>
+    `
   }
     
 );
   
-/*<p class="fs-4">Dolar oficial</p>
-              <div class="d-flex justify-content-center">
-                <p>compra</p>
-                <p class="ms-2 fs-4">$55</p>
-              </div>
-              <div  class="d-flex justify-content-center ">
-                <p>venta</p>
-                <p class="ms-2 fs-4">$55</p>
-              </div>
-
-<div class="bg-primary d-flex justify-content-around align-items-center">
-              
-</div>*/
