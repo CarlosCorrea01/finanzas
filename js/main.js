@@ -46,16 +46,18 @@ function guardar(){
         aportes: aporte,
     }))
     //Agregar al local
-    sessionStorage.setItem("misinversiones",JSON.stringify(inversiones))
+    localStorage.setItem("misinversiones",JSON.stringify(inversiones))
 }
 
 //ver inversiones cargadas
 
 
-const renderisado = (inversiones)=>{
+const renderisado = ()=>{
     let misGuardados = document.getElementById("misGuardados")
-    misGuardados.innerHTML = ""
-    inversiones.forEach(item => {
+    let misInverLocal = JSON.parse(localStorage.getItem("misinversiones"))
+    if(misInverLocal){
+      misGuardados.innerHTML = ""
+      misInverLocal.forEach(item=>{
         let div = document.createElement(`div`);
         div.className = "d-flex justify-content-center m-2 border border-success border-2"
         div.innerHTML = `
@@ -66,9 +68,14 @@ const renderisado = (inversiones)=>{
         <p class="m-3 fs-6 fw-bold">BALANCE FINAL:$${calculo(item.capital,item.interes,item.plazo,item.aportes)}</p>
         `;
         misGuardados.append(div);
-    });
+      })
+    } else{
+      Swal.fire('Empecemos! Cargue una datos para visualizar sus inversiones')
+    }
+   ;
 }
 
+renderisado();
 
 document.getElementById("calcular").onclick = ()=>{
     Swal.fire({
@@ -82,7 +89,7 @@ document.getElementById("calcular").onclick = ()=>{
         if (result.isConfirmed) {
             guardar();
             calcular();
-            renderisado(inversiones);
+            renderisado();
           Swal.fire('Guardado', '', 'success')
         } else if (result.isDenied) {
             calcular();
@@ -90,10 +97,11 @@ document.getElementById("calcular").onclick = ()=>{
         }
       })
 }
+renderisado();
 //reiniciar y eliminar session
 document.getElementById("reiniciar").onclick = ()=>{
     location.reload();
-    sessionStorage.clear();
+    localStorage.clear();
 }
 
 let otros = document.getElementById("otrosdolar");
